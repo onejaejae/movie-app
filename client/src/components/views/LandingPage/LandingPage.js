@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {API_URL, API_KEY, IMAGE_BASE_URL} from '../../Config';
 import MainImage from './Sections/MainImage';
+import { Row } from 'antd';
 import { FaCode } from "react-icons/fa";
+import GridCards from '../commons/GridCards';
 
 function LandingPage() {
     const [Movies, setMovies] = useState([]);
@@ -18,7 +20,7 @@ function LandingPage() {
             // state에 fecth로 가져온 movie 정보를 넣는다
             console.log(res);
             setMainMovieImage(res.results[0]);
-            setMovies([res.results]);
+            setMovies(res.results);
          }
         )
     }, [])
@@ -26,6 +28,7 @@ function LandingPage() {
     // useEffect는 render가 된 후 실행 되므로
     // useEffect 후에 render가 되도록 로직을 구성해야 한다
     // MainMovieImage && 라는 뜻 => MainMovieImage가 존재하면 뒤에 로직을 해라
+   console.log(Movies)
     return (
         <div style={{width:'100%', margin:'0'}}>
             {/* Main Image*/}
@@ -43,6 +46,20 @@ function LandingPage() {
                 <hr/>
 
                 {/* Movie Grid Card*/}
+                
+                <Row gutter={[16, 16]}>
+                    {Movies && Movies.map((movie, index) => (
+                        <React.Fragment key={index}>
+                            <GridCards
+                                image = {movie.poster_path ? `${IMAGE_BASE_URL}w500${movie.poster_path}` : null} 
+                                title = {movie.original_title}
+                                id = {movie.id}
+                            />
+                        </React.Fragment>
+                    ))}
+
+                </Row>
+
 
             </div>
 

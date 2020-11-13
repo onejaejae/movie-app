@@ -33,7 +33,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// url이 /api/favorite로 시작하면 ./routes/favorite 폴더로 가서 분기를 한다.
+// url이 /api/users로 시작하면 ./routes/users 폴더로 가서 분기를 한다.
 app.use('/api/users', require('./routes/users'));
+app.use('/api/favorite', require('./routes/favorite'))
 
 
 //use this to show the image you have in node js server to client (react js)
